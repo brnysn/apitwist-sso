@@ -22,7 +22,7 @@ class SSOToken extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'last_used_at' => 'datetime',
+        'last_used_at' => 'datetime'      ,
         'expires_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
