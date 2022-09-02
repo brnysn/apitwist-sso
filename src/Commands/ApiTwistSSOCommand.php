@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Brnysn\ApiTwistSSO\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ApiTwistSSOCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'apitwist-sso';
 
     public $description = 'My command';
 
