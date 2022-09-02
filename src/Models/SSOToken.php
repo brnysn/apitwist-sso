@@ -25,7 +25,7 @@ class SSOToken extends Model
         'last_used_at' => 'datetime',
         'expires_at' => 'datetime',
         'created_at' => 'datetime',
-        'updated_at' => 'datetime'
+        'updated_at' => 'datetime',
     ];
 
     public function prunable()
@@ -33,7 +33,7 @@ class SSOToken extends Model
         return static::where('expires_at', '<=', now());
     }
 
-    public function isExpired() : bool
+    public function isExpired(): bool
     {
         return $this->expires_at && $this->expires_at <= now();
     }

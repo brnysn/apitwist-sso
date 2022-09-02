@@ -11,7 +11,7 @@ trait HasSsoTokens
         return $this->ssoToken->token;
     }
 
-    public function ssoToken() : \Illuminate\Database\Eloquent\Relations\HasOne
+    public function ssoToken(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(SSOToken::class);
     }

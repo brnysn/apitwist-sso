@@ -2,9 +2,9 @@
 
 namespace Brnysn\ApiTwistSSO\Tests;
 
+use Brnysn\ApiTwistSSO\ApiTwistSSOServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Brnysn\ApiTwistSSO\ApiTwistSSOServiceProvider;
 
 class TestCase extends Orchestra
 {
