@@ -9,12 +9,12 @@ class SSOService
 {
     public function handle(string $token, string $expires_at = null, array $scopes = null)
     {
-        if (!$token) {
+        if (! $token) {
             return null;
         }
 
         $data = $this->getUserData($token);
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -27,7 +27,7 @@ class SSOService
 
     protected function getUserData(string $token)
     {
-        if (!$token) {
+        if (! $token) {
             return null;
         }
 
@@ -42,41 +42,44 @@ class SSOService
         if ($res->getStatusCode() != 200) {
             return null;
         }
-        $result = (string)$res->getBody();
+        $result = (string) $res->getBody();
+
         return json_decode($result, true);
     }
 
     protected function createOrUpdateUser($data)
     {
-        $user = $this->checkIfUserExists($data[ 'email' ]);
-        if (!$user) {
+        $user = $this->checkIfUserExists($data['email']);
+        if (! $user) {
             $user = User::create([
-                'name' => $data[ 'name' ] ?? null,
-                'surname' => $data[ 'surname' ] ?? null,
-                'username' => $data[ 'username' ] ?? null,
-                'email' => $data[ 'email' ] ?? null,
-                'phone' => $data[ 'phone' ] ?? null,
-                'phone_code' => $data[ 'phone_code' ] ?? null,
-                'active' => $data[ 'active' ] ?? null,
+                'name' => $data['name'] ?? null,
+                'surname' => $data['surname'] ?? null,
+                'username' => $data['username'] ?? null,
+                'email' => $data['email'] ?? null,
+                'phone' => $data['phone'] ?? null,
+                'phone_code' => $data['phone_code'] ?? null,
+                'active' => $data['active'] ?? null,
             ]);
         } else {
             $user->update([
-                'name' => $data[ 'name' ] ?? null,
-                'surname' => $data[ 'surname' ] ?? null,
-                'username' => $data[ 'username' ] ?? null,
-                'phone' => $data[ 'phone' ] ?? $user->phone,
-                'phone_code' => $data[ 'phone_code' ] ?? null,
-                'active' => $data[ 'active' ] ?? $user->active,
+                'name' => $data['name'] ?? null,
+                'surname' => $data['surname'] ?? null,
+                'username' => $data['username'] ?? null,
+                'phone' => $data['phone'] ?? $user->phone,
+                'phone_code' => $data['phone_code'] ?? null,
+                'active' => $data['active'] ?? $user->active,
             ]);
         }
+
         return $user;
     }
 
     protected function checkIfUserExists(string $email)
     {
-        if (!$email) {
+        if (! $email) {
             return null;
         }
+
         return User::where('email', $email)->first();
     }
 
@@ -95,17 +98,18 @@ class SSOService
         );
     }
 
-    public function validateToken(string $token, User $user) : bool
+    public function validateToken(string $token, User $user): bool
     {
         $result = $this->getUserData($token);
 
-        if ($result && $result[ 'email' ] && $result[ 'email' ] === $user->email) {
+        if ($result && $result['email'] && $result['email'] === $user->email) {
             $user->ssoToken()->update([
                 'last_used_at' => now(),
             ]);
+
             return true;
         }
+
         return false;
     }
 }
-

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class SsoApiAuthenticate
 {
     private int $validateTokenTime;
+
     private SsoService $service;
 
     public function __construct()
@@ -25,16 +26,15 @@ class SsoApiAuthenticate
      *
      * @param  Request  $request
      * @param  Closure(Request): (Response|RedirectResponse)  $next
-     *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next) : mixed
+    public function handle(Request $request, Closure $next): mixed
     {
         $token = $request->bearerToken();
 
         $user = $this->service->handle($token);
 
-        if (!$user || !$user->ssoToken()->exists()) {
+        if (! $user || ! $user->ssoToken()->exists()) {
             return response()->error(401, 'Unauthorized');
         }
 
@@ -46,11 +46,12 @@ class SsoApiAuthenticate
         // If token last used at is greater than 30 minutes ago, logout user
         if ($user->ssoToken->last_used_at->diffInMinutes() > $this->validateTokenTime) {
             //validate token
-            if (!$this->service->validateToken($user->getSsoToken(), $user)) {
+            if (! $this->service->validateToken($user->getSsoToken(), $user)) {
                 return response()->error(401, 'Unauthorized');
             }
         }
         Auth::login($user);
+
         return $next($request);
     }
 }

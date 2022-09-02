@@ -13,7 +13,9 @@ use Illuminate\Routing\Redirector;
 class SsoAuthenticate
 {
     private string $loginUrl;
+
     private int $validateTokenTime;
+
     private SsoService $service;
 
     public function __construct()
@@ -28,14 +30,14 @@ class SsoAuthenticate
      *
      * @param  Request  $request
      * @param  Closure  $next
-     *
      * @return Application|RedirectResponse|Response|Redirector|mixed
      */
     public function handle(Request $request, Closure $next)
     {
         $user = auth()->user();
-        if (!$user || !$user->ssoToken()->exists()) {
+        if (! $user || ! $user->ssoToken()->exists()) {
             auth()->logout();
+
             return redirect($this->loginUrl);
         }
 
@@ -43,15 +45,17 @@ class SsoAuthenticate
         if ($user->ssoToken->isExpired()) {
             $user->ssoToken->delete();
             auth()->logout();
+
             return redirect($this->loginUrl);
         }
 
         // If token last used at is greater than 30 minutes ago, logout user
         if ($user->ssoToken->last_used_at->diffInMinutes() > $this->validateTokenTime) {
             //validate token
-            if (!$this->service->validateToken($user->getSsoToken(), $user)) {
+            if (! $this->service->validateToken($user->getSsoToken(), $user)) {
                 $user->ssoToken->delete();
                 auth()->logout();
+
                 return redirect($this->loginUrl);
             }
         }
