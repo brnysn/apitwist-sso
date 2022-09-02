@@ -18,7 +18,6 @@
     "require": {
         "php": "^8.1",
         "spatie/laravel-package-tools": "^1.9.2",
-        "illuminate/contracts": "^9.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^8|^9"
     },
@@ -29,8 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Brnysn\\ApiTwistSSO\\": "src",
-            "Brnysn\\ApiTwistSSO\\Database\\Factories\\": "database/factories"
+            "Brnysn\\ApiTwistSSO\\": "src"
         }
     },
     "autoload-dev": {
@@ -55,10 +53,7 @@
         "laravel": {
             "providers": [
                 "Brnysn\\ApiTwistSSO\\ApiTwistSSOServiceProvider"
-            ],
-            "aliases": {
-                "ApiTwistSSO": "Brnysn\\ApiTwistSSO\\Facades\\ApiTwistSSO"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
