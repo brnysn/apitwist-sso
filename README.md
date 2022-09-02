@@ -2,11 +2,10 @@
 # This is the client Integration with ApiTwist SSO.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/brnysn/apitwist-sso.svg?style=flat-square)](https://packagist.org/packages/brnysn/apitwist-sso)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/brnysn/apitwist-sso/run-tests?label=tests)](https://github.com/brnysn/apitwist-sso/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/brnysn/apitwist-sso/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/brnysn/apitwist-sso/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/brnysn/apitwist-sso.svg?style=flat-square)](https://packagist.org/packages/brnysn/apitwist-sso)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Client integration for ApiTwist SSO.
 
 ## Installation
 
@@ -80,20 +79,9 @@ sso.login
 sso.logout
 ```
 
-## Testing
-
-```bash
-composer test
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
 ## Credits
 
 - [Yasin BARAN](https://github.com/brnysn)
-- [All Contributors](../../contributors)
 
 ## License
 
