@@ -18,6 +18,6 @@ class ApiTwistSSOServiceProvider extends PackageServiceProvider
             ->name('apitwist-sso')
             ->hasConfigFile()
             ->hasMigration('create_sso_tokens_table')
-            ->hasRoute('route');
+            ->hasRoute('web');
     }
 }
