@@ -18,9 +18,9 @@ composer require brnysn/apitwist-sso
 Add SSO config to your `.env` file:
 
 ```php
-CLIENT_ID=client_id
-CLIENT_SECRET=client_secret
-REDIRECT_URL='https://yourdomain.com/sso/callback/'
+SSO_CLIENT_ID=client_id
+SSO_CLIENT_SECRET=client_secret
+SSO_REDIRECT_URL='https://yourdomain.com/sso/callback/'
 ```
 
 Add HasSsoTokens trait to your User model
@@ -68,13 +68,24 @@ return [
 
 ## Usage
 
-Use `sso.auth` middleware in your `routes/web.php` file:
+Use `sso.auth` along with `web` middleware in your `routes/web.php` file:
 
 ```php
 Route::group([ 'middleware' => [ 'web', 'sso.auth' ] ], function () {
     // Your routes
 });
 ```
+
+If you see `Session store not set on request.` error, add theese middlewares in your `app/Http/Kernel.php` file $middleware array:
+
+```php
+protected $middleware = [
+    // ...
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+];
+```
+
 
 Use named routes as authentication routes:
 
