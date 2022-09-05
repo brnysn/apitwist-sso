@@ -2,9 +2,10 @@
     "name": "brnysn/apitwist-sso",
     "description": "This is the client Integration with ApiTwist SSO.",
     "keywords": [
-        "brnysn",
         "laravel",
-        "apitwist-sso"
+        "apitwist",
+        "sso",
+        "client"
     ],
     "homepage": "https://github.com/brnysn/apitwist-sso",
     "license": "MIT",
@@ -19,7 +20,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9",
         "laravel/pint": "^1.0",
-        "php": "^8.1",
+        "php": "^8.0",
         "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {
