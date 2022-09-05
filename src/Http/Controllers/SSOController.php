@@ -43,19 +43,19 @@ class SSOController extends Controller
                 'code' => $request->input('code'),
             ],
         ]);
-        if (!$response->getStatusCode() == 200) {
+        if (! $response->getStatusCode() == 200) {
             return redirect()->route('sso.login')->with('error', 'Invalid code');
         }
-        $response = json_decode((string)$response->getBody(), true);
+        $response = json_decode((string) $response->getBody(), true);
 
-        $request->session()->put('sso_access_token', $response[ 'access_token' ]);
-        $request->session()->put('sso_refresh_token', $response[ 'refresh_token' ]);
+        $request->session()->put('sso_access_token', $response['access_token']);
+        $request->session()->put('sso_refresh_token', $response['refresh_token']);
         $request->session()->put('sso_tokens_verified_at', now());
-        $request->session()->put('sso_tokens_expires_in', $response[ 'expires_in' ]);
+        $request->session()->put('sso_tokens_expires_in', $response['expires_in']);
 
-        $expires_at = Carbon::parse($response[ 'expires_in' ] + now()->timestamp);
-        $user = (new SSOService())->handle($response[ 'access_token' ], $expires_at);
-        if (!$user) {
+        $expires_at = Carbon::parse($response['expires_in'] + now()->timestamp);
+        $user = (new SSOService())->handle($response['access_token'], $expires_at);
+        if (! $user) {
             return redirect()->route('sss.login')->with('error', 'Invalid state');
         }
 
