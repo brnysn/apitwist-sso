@@ -20,7 +20,7 @@ Add SSO config to your `.env` file:
 ```php
 client_id=client_id
 client_secret=client_secret
-redirect_url='https://yourdomain.com//sso/callback/'
+redirect_url='https://yourdomain.com/sso/callback/'
 ```
 
 Add HasSsoTokens trait to your User model
