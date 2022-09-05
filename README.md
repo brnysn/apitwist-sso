@@ -18,9 +18,9 @@ composer require brnysn/apitwist-sso
 Add SSO config to your `.env` file:
 
 ```php
-client_id=client_id
-client_secret=client_secret
-redirect_url='https://yourdomain.com/sso/callback/'
+CLIENT_ID=client_id
+CLIENT_SECRET=client_secret
+REDIRECT_URL='https://yourdomain.com/sso/callback/'
 ```
 
 Add HasSsoTokens trait to your User model
@@ -29,11 +29,14 @@ Add HasSsoTokens trait to your User model
 use Brnysn\ApitwistSso\Traits\HasSsoTokens;
 ```
 
-Add middlewares to your `app/Http/Kernel.php` file:
+Add middlewares to your `app/Http/Kernel.php` file $routeMiddleware array:
 
 ```php
-'sso.auth' => \App\Http\Middleware\SsoAuthenticate::class,
-'sso.api' => \App\Http\Middleware\SsoApiAuthenticate::class,
+protected $routeMiddleware = [
+    // ...
+    'sso.auth' => \Brnysn\ApiTwistSSO\Http\Middleware\SsoAuthenticate::class,
+    'sso.api' => \Brnysn\ApiTwistSSO\Http\Middleware\SsoApiAuthenticate::class,
+];
 ```
 
 You can publish and run the migrations with:
