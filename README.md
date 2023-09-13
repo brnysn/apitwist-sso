@@ -71,7 +71,7 @@ return [
 Use `sso.auth` along with `web` middleware in your `routes/web.php` file:
 
 ```php
-Route::group([ 'middleware' => [ 'web', 'sso.auth' ] ], function () {
+Route::middleware([ 'web', 'sso.auth' ])->get('/route', function () {
     // Your routes
 });
 ```

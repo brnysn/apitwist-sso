@@ -8,16 +8,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('sso_tokens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique();
-            $table->text('token')->index();
+            $table->string('token')->index();
             $table->json('scopes')->nullable();
+
+            $table->foreignUUid('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+
             $table->timestamp('last_used_at')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
@@ -26,10 +26,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('sso_tokens');
     }

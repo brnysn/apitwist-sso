@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class SSOService
 {
-    public function handle(string $token, string $expires_at = null, array $scopes = null)
+    public function handle(string $token, string $expires_at = null, array $scopes = null): ?User
     {
         if (! $token) {
             return null;
@@ -47,43 +47,22 @@ class SSOService
         return json_decode($result, true);
     }
 
-    protected function createOrUpdateUser($data)
+    protected function createOrUpdateUser($data): User
     {
-        $user = $this->checkIfUserExists($data['email']);
-        if (! $user) {
-            $user = User::create([
-                'name' => $data['name'] ?? null,
-                'surname' => $data['surname'] ?? null,
-                'username' => $data['username'] ?? null,
-                'email' => $data['email'] ?? null,
-                'phone' => $data['phone'] ?? null,
-                'phone_code' => $data['phone_code'] ?? null,
-                'active' => $data['active'] ?? null,
-            ]);
-        } else {
-            $user->update([
-                'name' => $data['name'] ?? null,
-                'surname' => $data['surname'] ?? null,
-                'username' => $data['username'] ?? null,
-                'phone' => $data['phone'] ?? $user->phone,
-                'phone_code' => $data['phone_code'] ?? null,
-                'active' => $data['active'] ?? $user->active,
-            ]);
-        }
+        $user = User::updateOrCreate([
+            'email' => $data['email'] ?? null,
+        ], [
+            'name' => $data['name'] ?? null,
+            'surname' => $data['surname'] ?? null,
+            'username' => $data['username'] ?? null,
+            'phone' => $data['phone'] ?? null,
+            'active' => $data['active'] ?? null,
+        ]);
 
         return $user;
     }
 
-    protected function checkIfUserExists(string $email)
-    {
-        if (! $email) {
-            return null;
-        }
-
-        return User::where('email', $email)->first();
-    }
-
-    protected function updateToken(User $user, string $token, string $expires_at = null, array $scopes = null)
+    protected function updateToken(User $user, string $token, string $expires_at = null, array $scopes = null): void
     {
         $user->ssoToken()->updateOrCreate(
             [
