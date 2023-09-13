@@ -28,8 +28,6 @@ class SsoAuthenticate
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
      * @return Application|RedirectResponse|Response|Redirector|mixed
      */
     public function handle(Request $request, Closure $next)

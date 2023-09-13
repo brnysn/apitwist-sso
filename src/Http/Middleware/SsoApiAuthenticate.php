@@ -24,9 +24,7 @@ class SsoApiAuthenticate
     /**
      * Handle an incoming api request.
      *
-     * @param  Request  $request
      * @param  Closure(Request): (Response|RedirectResponse)  $next
-     * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
