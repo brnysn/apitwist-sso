@@ -32,7 +32,7 @@ class SSOService
         }
 
         $http = new Client(['http_errors' => false]);
-        $res = $http->get(config('sso.get_user_url'), [
+        $res = $http->get(config('apitwist-sso.get_user_url'), [
             'headers' => [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer '.$token,

@@ -19,6 +19,8 @@ class SSOToken extends Model
 {
     use Prunable;
 
+    protected $table = 'sso_tokens';
+
     protected $guarded = [];
 
     protected $casts = [

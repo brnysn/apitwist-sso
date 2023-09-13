@@ -86,13 +86,21 @@ protected $middleware = [
 ];
 ```
 
-
 Use named routes as authentication routes:
 
 ```php
 sso.login
 sso.logout
 ```
+
+Add `sso.loggedIn` named route to your home page:
+
+```php
+Route::middleware([ 'web', 'sso.auth' ])->get('/home', function () {
+    // Your home page
+})->name('sso.loggedIn')->name('home');
+```
+
 
 ## Credits
 

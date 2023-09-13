@@ -61,7 +61,7 @@ class SSOController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('profile');
+        return redirect()->route('sso.loggedIn');
     }
 
     public function logout(Request $request)
