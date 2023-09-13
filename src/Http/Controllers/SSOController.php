@@ -16,14 +16,14 @@ class SSOController extends Controller
     {
         $request->session()->put('state', $state = Str::random(40));
         $query = http_build_query([
-            'client_id' => config('sso.client_id'),
-            'redirect_uri' => config('sso.redirect_url'),
+            'client_id' => config('apitwist-sso.client_id'),
+            'redirect_uri' => config('apitwist-sso.redirect_url'),
             'response_type' => 'code',
             'scope' => '',
             'state' => $state,
         ]);
 
-        return redirect()->away(config('sso.authorize_url').'?'.$query);
+        return redirect()->away(config('apitwist-sso.authorize_url').'?'.$query);
     }
 
     public function callback(Request $request)
@@ -34,12 +34,12 @@ class SSOController extends Controller
             return redirect()->route('sso.login')->with('error', 'Invalid state');
         }
         $http = new Client(['http_errors' => false]);
-        $response = $http->post(config('sso.api_url'), [
+        $response = $http->post(config('apitwist-sso.api_url'), [
             'form_params' => [
                 'grant_type' => 'authorization_code',
-                'client_id' => config('sso.client_id'),
-                'client_secret' => config('sso.client_secret'),
-                'redirect_uri' => config('sso.redirect_url'),
+                'client_id' => config('apitwist-sso.client_id'),
+                'client_secret' => config('apitwist-sso.client_secret'),
+                'redirect_uri' => config('apitwist-sso.redirect_url'),
                 'code' => $request->input('code'),
             ],
         ]);
@@ -75,13 +75,13 @@ class SSOController extends Controller
                     'Authorization' => 'Bearer '.$user->getSsoToken(),
                 ];
                 $client = new Client(['headers' => $headers, 'http_errors' => false]);
-                $client->post(config('sso.api_url'));
+                $client->post(config('apitwist-sso.api_url'));
 
                 $user->ssoToken->delete();
             }
         }
         $request->session()->forget('access_token');
 
-        return redirect()->away(config('sso.logout_url').'?callback='.env('APP_URL'));
+        return redirect()->away(config('apitwist-sso.logout_url').'?callback='.env('APP_URL'));
     }
 }
